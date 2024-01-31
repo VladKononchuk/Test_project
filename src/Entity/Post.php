@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\Post\PostRepository;
-use App\ValueObject\Description;
-use App\ValueObject\Name;
+use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
@@ -21,6 +21,15 @@ class Post
     #[ORM\Column]
     private string $description;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts', cascade: ['persist'])]
+    #[ORM\JoinTable(name: 'posts_categories')]
+    private Collection $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -36,18 +45,39 @@ class Post
         return $this->description;
     }
 
-    public function setId(string $id): void
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
     {
-        $this->id = $id;
+        return $this->categories;
     }
 
-    public function setName(Name $name): void
+    public function setName(string $name): void
     {
-        $this->name = $name->value;
+        $this->name = $name;
     }
 
-    public function setDescription(Description $description): void
+    public function setDescription(string $description): void
     {
-        $this->description = $description->value;
+        $this->description = $description;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+        }
+
+        return $this;
     }
 }

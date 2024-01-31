@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PostCreate{% endblock %}
+
+{% block body %}
+    <h1>new post</h1>
+
+    {{ form_errors(form) }}
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.categories) }}
+
+    <button type="submit" class="btn">Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\DeletePostService;
+use App\Entity\Post;
+use App\Repository\PostRepositoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +13,15 @@ use Symfony\Component\HttpFoundation\Response;
 final class DeletePostController extends AbstractController
 {
     public function __construct(
-        private readonly DeletePostService $deletePostService,
+        private readonly PostRepositoryInterface $postRepository,
     ) {
     }
 
-    #[Route('/post/delete{id}', name: 'post_delete' )]
-    public function createPost(int $id): Response
+    #[Route('/posts/delete/{id}', name: 'post_delete', methods: ['GET'])]
+    public function deletePost(Post $post): Response
     {
-        $this->deletePostService->deletePost(--$id);
+        $this->postRepository->remove($post);
 
-        return $this->redirectToRoute('home_page');
+        return $this->redirectToRoute('posts');
     }
 }

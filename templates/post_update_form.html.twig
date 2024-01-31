@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PostUpdate{% endblock %}
+
+{% block body %}
+    <h1>post change</h1>
+
+    {{ form_errors(form) }}
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.categories) }}
+
+
+    <button type="submit" class="btn">Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

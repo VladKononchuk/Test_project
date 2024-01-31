@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Repository\Post\PostRepositoryInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
+use App\Repository\PostRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 final class PostShowController extends AbstractController
 {
@@ -15,10 +15,11 @@ final class PostShowController extends AbstractController
         private readonly PostRepositoryInterface $postRepository,
     ) {
     }
-    #[Route('/', name: 'home_page')]
+
+    #[Route('/', name: 'posts', methods: ['GET'])]
     public function index(): Response
     {
-        $posts = $this->postRepository->getAllPosts();
+        $posts = $this->postRepository->findAll();
 
         return $this->render('posts.html.twig', [
             'posts' => $posts,
