@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Categories {% endblock %}
+
+{% block body %}
+    Categories:
+    <ul>
+    {% for category in categories %}
+        <li>{{ category.name}}
+            <br>
+            <a href="{{ path('category_update', { id: category.id }) }}"> <button type="button">Update</button> </a>
+            <a href="{{ path('category_delete', { id: category.id }) }}"> <button type="button">Delete</button> </a>
+        </li>
+        <br>
+    {% endfor %}
+    </ul>
+    <a href="{{ path('category_create') }}"> <button type="button">Create new category</button> </a>
+{% endblock %}
+

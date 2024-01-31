@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Posts {% endblock %}
+
+{% block body %}
+    Posts:
+    <ul>
+    {% for post in posts %}
+        <li><a href="{{ path('show_post', { id: post.id }) }}">{{ post.name }} </a>
+            <br>
+            <a href="{{ path('post_update', { id: post.id }) }}"> <button type="button">Update</button> </a>
+            <a href="{{ path('post_delete', { id: post.id }) }}"> <button type="button">Delete</button> </a>
+        </li>
+        <br>
+    {% endfor %}
+    </ul>
+    <a href="{{ path('post_create') }}"> <button type="button">Create new Post</button> </a>
+{% endblock %}
+
